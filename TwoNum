@@ -1,0 +1,22 @@
+package main
+
+import "fmt"
+
+func main(){
+    var a,b,d,c int
+    fmt.Scan(&a, &b)
+    for a > 0 {
+        d = a % 10
+        a = a / 10
+        c = b
+        for c > 0 {
+            if d == c % 10 {
+                fmt.Print(d, " ")
+                
+            }
+            c = c / 10
+        }
+    }
+}
+
+
