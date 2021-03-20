@@ -1,0 +1,53 @@
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"log"
+	"math/rand" // библиотека для генерация рандомных чисел
+	"os"
+	"strconv"
+	"strings"
+	"time"
+)
+
+func main() {
+	success := false
+	seconds := time.Now().Unix() // Получаем текущую дату и время в формате целого числа
+	rand.Seed(seconds)           // функция генератора случайных чисел
+	target := rand.Intn(100) + 1
+	fmt.Println("Выбери ранодмное числа в диапазоне от 1 до 100")
+	fmt.Println("Число выбрано?")
+	//fmt.Println(target)
+	reader := bufio.NewReader(os.Stdin) // создаем bufio.Reader для чтения ввода с клавиатуры
+
+	for guesses := 0; guesses < 10; guesses++ {
+		fmt.Println("осталось попыток: ", 10-guesses)
+		fmt.Println("Напиши число: ")
+		input, err := reader.ReadString('\n') // прочитать данные с клавиатуры до нажатия Enter
+		if err != nil {
+			log.Fatal(err) // проверка ошибки
+		}
+		input = strings.TrimSpace(input)  // удаление символа новой строки
+		guess, err := strconv.Atoi(input) // входная строка переводится в целое число
+		if err != nil {
+			log.Fatal(err)
+		}
+		if guess < target {
+			fmt.Println("Упс, выбранное число меньше загаданного :)")
+		} else if guess > target {
+			fmt.Println("Упс, выбранное число больше загаданного :)")
+		} else {
+			success = true
+			fmt.Println("Отличная работа! Число угадано")
+			break // выход из цикла
+		}
+
+	}
+	if !success {
+		fmt.Println("Game over!  ", "Это было число: ", target)
+	}
+	fmt.Println("Нажмите Enter что бы продолжить")
+	fmt.Scanln()
+
+}
